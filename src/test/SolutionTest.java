@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,16 +51,3 @@ class SolutionTest {
         assertEquals(14, result);
     }
 }
-
-//Open the project you want to share.
-//
-//From the main menu, choose Git | GitHub | Share Project on GitHub.
-//
-//If you have already registered your GitHub account in IntelliJ IDEA, connection will be established using these credentials.
-//
-//When connection to GitHub has been established, the Share Project on GitHub dialog opens.
-// Specify the new repository name, the name of the remote , and enter a description of your project.
-//
-//You can select the Private option if you do not want to allow public access to your repository for other GitHub users.
-//
-//Click Share to initiate a new repository and upload project sources to it.

@@ -48,8 +48,6 @@ public class Solution {
     }
 
     private static int[][] getMatrix(String str, String race){
-        // абсолютно не критично, но все-таки правильнее разделить метод на получение и отрисовку
-        // либо назвать метод readAndPrint или типа того
         int[][] matrix = new int[4][4];
 
         char[] chars = str.toCharArray();
@@ -85,13 +83,6 @@ public class Solution {
                     matrix[i][j] = map.get(chars[k++]);
                 }
             }
-//                //отрисовка матрицы
-//            for(int i = 0; i < matrix.length; i++){
-//                for(int j = 0; j < matrix[i].length; j++){
-//                    System.out.print(matrix[i][j] + " " );
-//                }
-//                System.out.println();
-//            }
         }
         return matrix;
     }
@@ -119,7 +110,7 @@ public class Solution {
                 4 * 4, new Comparator<Cell>() {
             /**
              * Custom comparator for inserting cells into Priority Queue -
-             * we take cells with min cost first
+             * we poll cells with min cost first
              */
             @Override
             public int compare(Cell a, Cell b) {
@@ -181,7 +172,7 @@ public class Solution {
 
 
     public static void main(String[] args) {
-        System.out.println(getResult("WTPSSTWPTSTWPSSP", "Woodman"));
+        System.out.println(getResult("SPWTPSPWTSPWWSWP", "Woodman"));
 
     }
 }
