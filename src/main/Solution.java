@@ -1,6 +1,10 @@
 import java.util.*;
 
 public class Solution {
+    private static final int ROW = 4;
+    private static final int COL = 4;
+
+
 
     public static int getResult(String str, String race){
         return shortestPath(getMatrix(str, race));
@@ -43,12 +47,12 @@ public class Solution {
      */
     private static boolean isInsideMatrix(int i, int j)
     {
-        return (i >= 0 && i < 4 &&
-                j >= 0 && j < 4);
+        return (i >= 0 && i < ROW &&
+                j >= 0 && j < COL);
     }
 
     private static int[][] getMatrix(String str, String race){
-        int[][] matrix = new int[4][4];
+        int[][] matrix = new int[ROW][COL];
 
         char[] chars = str.toCharArray();
 
@@ -76,14 +80,11 @@ public class Solution {
             }
         }
 
-
-        if(str.length()==16) {
-            for(int i = 0, k = 0; i < matrix.length; i++){
-                for(int j = 0; j < matrix[i].length; j++){
+        for(int i = 0, k = 0; i < matrix.length; i++){
+            for(int j = 0; j < matrix[i].length; j++){
                     matrix[i][j] = map.get(chars[k++]);
                 }
             }
-        }
         return matrix;
     }
     /**
@@ -98,7 +99,7 @@ public class Solution {
        final int[] dx = { -1, 0, 1, 0 };
        final int[] dy = { 0, 1, 0, -1 };
 
-        int[][] cost = new int[4][4];
+        int[][] cost = new int[ROW][COL];
         for (int[] ints : cost) {
             Arrays.fill(ints, Integer.MAX_VALUE);
         }
@@ -107,7 +108,7 @@ public class Solution {
         cost[0][0] = grid[0][0];
 
         PriorityQueue<Cell> pq = new PriorityQueue<Cell>(
-                4 * 4, new Comparator<Cell>() {
+                ROW * COL, new Comparator<Cell>() {
             /**
              * Custom comparator for inserting cells into Priority Queue -
              * we poll cells with min cost first
