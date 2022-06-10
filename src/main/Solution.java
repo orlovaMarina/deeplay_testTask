@@ -52,10 +52,7 @@ public class Solution {
     private static int[][] getMatrix(String str, String race) {
         int[][] matrix = new int[ROW][COL];
         char[] chars = str.toCharArray();
-//вот здесь лучше не хардкодить путь к файлу.
-//Мне кажется, лучше создать директорию src/main/resources и туда положить файлик с примером. То есть, добавить прям в проект.
-//Тогда удобнее будет посмотреть формат файла и вносить туда какие-то изменения, не трогая сам код.
-        //создать директорию src/main/resources и туда положить файлик с примером.
+
         Map<String, Map<String, Integer>> allRacesData = getDataFromFile();
 
         try{
@@ -69,7 +66,6 @@ public class Solution {
         }catch(NullPointerException exc){
             System.out.println("Race " + race + " is not found in the database." );
         }
-
         return matrix;
     }
 
