@@ -50,4 +50,19 @@ class SolutionTest {
         int result = solution.getResult("WTPSSTWPTSTWPSSP", "Woodman");
         assertEquals(14, result);
     }
+    @Test
+    void testGetResult_Swamper_4() {
+        int result = solution.getResult("WTSPWTPSPPTWSSPW", "Swamper" );
+        assertEquals(12, result );
+    }
+    @Test
+    void testGetResult_Human_4(){
+        int result = solution.getResult("WTSPWTPSPPTWSSPW", "Human");
+        assertEquals(10, result);
+    }
+    @Test
+    void testResult_Woodman_4(){
+        int result = solution.getResult("WTSPWTPSPPTWSSPW", "Woodman");
+        assertEquals(13, result);
+    }
 }
