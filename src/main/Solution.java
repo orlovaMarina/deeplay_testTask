@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Solution {
@@ -49,15 +52,24 @@ public class Solution {
     private static int[][] getMatrix(String str, String race) {
         int[][] matrix = new int[ROW][COL];
         char[] chars = str.toCharArray();
+//вот здесь лучше не хардкодить путь к файлу.
+//Мне кажется, лучше создать директорию src/main/resources и туда положить файлик с примером. То есть, добавить прям в проект.
+//Тогда удобнее будет посмотреть формат файла и вносить туда какие-то изменения, не трогая сам код.
+        //создать директорию src/main/resources и туда положить файлик с примером.
+        Map<String, Map<String, Integer>> allRacesData = getDataFromFile();
 
-        Map<String, Map<String, Integer>> allRacesData = getDataFromFile("/Users/marinaorlova/Downloads/tst2.csv");
-        Map<String, Integer> raceData = allRacesData.get(race);
+        try{
+            Map<String, Integer> raceData = allRacesData.get(race);
 
-        for (int i = 0, k = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                matrix[i][j] = raceData.get(String.valueOf(chars[k++]));
+            for (int i = 0, k = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[i].length; j++) {
+                    matrix[i][j] = raceData.get(String.valueOf(chars[k++]));
+                }
             }
+        }catch(NullPointerException exc){
+            System.out.println("Race " + race + " is not found in the database." );
         }
+
         return matrix;
     }
 
@@ -65,12 +77,14 @@ public class Solution {
      * Method to read data from a file.
      * The file should be with .csv extension and contain data in the following pattern: "Race, Obstacle, Cost" in every line
      */
-    private static Map<String, Map<String, Integer>> getDataFromFile(String path) {
+    private static Map<String, Map<String, Integer>> getDataFromFile() {
         Map<String, Map<String, Integer>> outer = new HashMap<>();
         String line = "";
         String splitBy = ", ";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(path));
+            URL resource = Solution.class.getResource("inputData.csv");
+            BufferedReader br = new BufferedReader(new FileReader(Paths.get(resource.toURI()).toFile()));
+
             while ((line = br.readLine()) != null){
                 String[] lineArray = line.split(splitBy);
 
@@ -78,15 +92,17 @@ public class Solution {
                 String obstacle = lineArray[1];
                 Integer cost = Integer.parseInt(lineArray[2]);
 
-                Map<String, Integer> inner = new HashMap<>();
-                inner.put(obstacle, cost);
                 if(outer.containsKey(race)){
                     outer.get(race).put(obstacle,cost);
                 }
-                else outer.put(race, inner);
+                else {
+                    Map<String, Integer> inner = new HashMap<>();
+                    inner.put(obstacle, cost);
+                    outer.put(race, inner);
+                }
             }
         }
-        catch(IOException e) {
+        catch(IOException | URISyntaxException e) {
             e.printStackTrace();
         }
         return outer;
